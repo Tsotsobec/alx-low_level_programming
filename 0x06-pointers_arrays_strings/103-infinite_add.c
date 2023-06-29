@@ -3,7 +3,6 @@
 /**
  * rev_string - reverse array
  * @n: integer params
- *
  * Return: 0
  */
 
@@ -33,7 +32,6 @@ void rev_string(char *n)
  * @n2: text representation of 2nd number to add
  * @r: pointer to buffer
  * @size_r: buffer size
- *
  * Return: pointer to calling function
  */
 
