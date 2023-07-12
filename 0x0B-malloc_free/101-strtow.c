@@ -1,36 +1,39 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "main.h"
 
 /**
- * count_word - helper function to count the number of words in a string
+ * count_word - helper fumction to count the number of words in a string
  * @s: string to evaluate
  *
  * Return: number of words
  */
 
-int count_word(char *s)
+int count_word(char *str);
+char **strtow(char *str);
+
+int count_words(char *str)
 {
-	int flag, c, w;
+	int count = 0, i = 0;
 
-	flag = 0;
-	w = 0;
-
-	for (c = 0; s[c] != '\0'; c++)
+	while (str[i] != '\0')
 	{
-		if (s[c] == ' ')
-			flag = 0;
-		else if (flag == 0)
+		if (str[i] != ' ')
 		{
-			flag = 1;
-			w++;
+			count++;
+			while (str[i] != ' ' && str[i] != '\0')
+				i++;
+		} else
+		{
+			i++;
 		}
 	}
-	return (w);
+	return (count);
 }
 
 /**
- * **strtow - function that splits a string into words
+ * **strtow - splits a string into words
  * @str: string to split
  *
  * Return: pointer to an array of strings (Success)
@@ -39,38 +42,30 @@ int count_word(char *s)
 
 char **strtow(char *str)
 {
-	char **matrix, *tmp;
-	int i, k = 0, len = 0, words, c = 0, start, end;
+	if (str == NULL || strcmp(str, "") == 0)
+		return (NULL);
 
-	while (*(str + len))
-		len++;
-	words = count_word(str);
-	if (words == 0)
+	int word_count = count_words(str);
+	char **words = malloc(sizeof(char *) * (word_count + 1));
+
+	if (words == NULL)
 		return (NULL);
-	matrix = (char **)malloc(sizeof(char *) * (words + 1));
-	if (matrix == NULL)
-		return (NULL);
-	for (i = 0; i <= len; i++)
+
+	int i = 0;
+	char *token = strtok(str, " ");
+
+	while (token != NULL)
 	{
-		if (str[i] == ' ' || str[i] == '\0')
-		{
-			if (c)
-			{
-				end = i;
-				tmp = (char *)malloc(sizeof(char) * (c + 1));
-				if (tmp == NULL)
-					return (NULL);
-				while (start < end)
-					*tmp++ = str[start++];
-				*tmp = '\0';
-				matrix[k] = tmp - c;
-				k++;
-				c = 0;
-			}
-		}
-		else if (c++ == 0)
-			strat = i;
+		for (int j = 0; j < i; j++)
+			free(words[j]);
+		free(words);
+
+		return (NULL);
 	}
-	matrix[k] = NULL;
-	return (matrix);
+	strcpy(words[i], token);
+	i++;
+	token = strtok(NULL, " ");
+words[i] = NULL;
+
+return (words);
 }
