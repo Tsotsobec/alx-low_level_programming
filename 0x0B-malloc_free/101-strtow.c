@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include "main.h"
 
 /**
@@ -10,26 +9,25 @@
  * Return: number of words
  */
 
-int count_word(char *str);
-char **strtow(char *str);
-
-int count_words(char *str)
+int count_word(char *s)
 {
-	int count = 0, i = 0;
+	int flag, c, w;
 
-	while (str[i] != '\0')
+	flag = 0;
+	w = 0;
+
+	for (c = 0; s[c] != '\0'; c++)
 	{
-		if (str[i] != ' ')
+		if (s[c] == ' ')
+			flag = 0;
+		else if (flag == 0)
 		{
-			count++;
-			while (str[i] != ' ' && str[i] != '\0')
-				i++;
-		} else
-		{
-			i++;
+			flag = 1;
+			w++;
 		}
 	}
-	return (count);
+
+	return (w);
 }
 
 /**
@@ -42,30 +40,41 @@ int count_words(char *str)
 
 char **strtow(char *str)
 {
-	if (str == NULL || strcmp(str, "") == 0)
+	char **matrix, *tmp;
+	int i, k = 0, len = 0, words, c = 0, start, end;
+
+	while (*(str + len))
+		len++;
+	words = count_word(str);
+	if (words == 0)
 		return (NULL);
 
-	int word_count = count_words(str);
-	char **words = malloc(sizeof(char *) * (word_count + 1));
-
-	if (words == NULL)
+	matrix = (char **) malloc(sizeof(char *) * (words + 1));
+	if (matrix == NULL)
 		return (NULL);
 
-	int i = 0;
-	char *token = strtok(str, " ");
-
-	while (token != NULL)
+	for (i = 0; i <= len; i++)
 	{
-		for (int j = 0; j < i; j++)
-			free(words[j]);
-		free(words);
-
-		return (NULL);
+		if (str[i] == ' ' || str[i] == '\0')
+		{
+			if (c)
+			{
+				end = i;
+				tmp = (char *) malloc(sizeof(char) * (c + 1));
+				if (tmp == NULL)
+					return (NULL);
+				while (start < end)
+					*tmp++ = str[start++];
+				*tnp = '\0';
+				matrix[k] = tmp - c;
+				k++;
+				c = 0;
+			}
+		}
+		else if (c++ == 0)
+			start = i;
 	}
-	strcpy(words[i], token);
-	i++;
-	token = strtok(NULL, " ");
-words[i] = NULL;
 
-return (words);
+	matrix[k] = NULL;
+	return (matrix);
 }
