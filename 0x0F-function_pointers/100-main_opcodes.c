@@ -16,16 +16,16 @@ int main(int argc, char *argv[])
 
 	if (argc != 2)
 	{
-		printf("Usage: %s <number_of_bytes>\n", argv[0]);
-		return (1);
+		printf("Error\n");
+		exit(1);
 	}
 
 	bytes = atoi(argv[1]);
 
-	if (bytes <= 0)
+	if (bytes < 0)
 	{
-		printf("Error: Please enter a positive number of bytes.\n");
-		return (2);
+		printf("Error\n");
+		exit(2);
 	}
 
 	arr = (unsigned char *)main;
