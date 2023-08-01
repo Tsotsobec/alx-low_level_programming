@@ -4,7 +4,7 @@
 
 /**
  * print_listint - function that prints all the elements of list 'listint_t'
- * @h: singly linked list 'listint_t' to print
+ * @h: linked list of type 'listint_t' to print
  *
  * Return: The number of nodes
  */
